@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//没有想到更好的用递归的做法，整合成一个字符串不如直接用循环
 void num2str(int n){
     if(n >= 10) {
         num2str(n/10);
