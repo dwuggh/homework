@@ -1,38 +1,36 @@
 {
-    "version": "2.0.0",  
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
     "tasks": [
         {
-            "label": "build & debug file",
+            "label": "compile",
             "type": "shell",
-            "command": "g++",
+            "command": "gcc",
             "args": [
-                "-g",
+                "${file}",
                 "-o",
-                "${fileBasenameNoExtension}",
-                "${file}"
+                "${fileDirname}/a.out"
             ],
         "group": {    
             "kind": "build",
             "isDefault": true
             }
         },
-
-
         {
-            "label": "run Cpp",
+            "label": "debug",
             "type": "shell",
-            "command": "g++",    
+            "command": "gcc",
             "args": [
-                "-o", 
-                "${fileBasenameNoExtension}",
-                "${file}"
-            ],    
-            "group": {
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/a.out"
+            ],
+        "group": {    
             "kind": "build",
             "isDefault": true
             }
-        },
-
-    
-    ]    
+        }
+    ]
 }

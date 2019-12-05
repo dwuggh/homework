@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 typedef struct stu{
-    //int num;
-    //char name[16];
-    //char sex;
-    //int age;
+    int num;
+    char name[16];
+    char sex;
+    int age;
     double grade;
     struct stu* next;
 }Stu, *PStu;
@@ -24,72 +24,84 @@ PStu create(int n){
     PStu current, first;
     TEST(first);
     current = first;
-    first->grade = pesudo_random(1);
-    for(i = 2; i<= n; i++){
+    first -> grade = pesudo_random(1);
+    first -> num = 1;
+    for(i = 2; i <= n; i++){
         TEST(current -> next);
         current = current -> next;
-        current->grade = pesudo_random(i);
+        current -> grade = pesudo_random(i);
+        current -> num = i;
         //don't care about the rest
     }
     current -> next = NULL;
     return first;
 }
 
-void switch_node(PStu front, PStu back, PStu back_prev){
-    PStu p1 = front -> next;
-    front -> next = back;
-    PStu p2 = back -> next;
-    //PStu p2 = back_prev;
-    
-    back -> next = p1;
-    back_prev -> next = p2;
-    //p1 -> next = p2;
+void switch_node(PStu front, PStu back, PStu first){
+    PStu p = back -> next;
+    PStu front_prev, back_prev;
+    for(front_prev = first; front_prev -> next != front; front_prev = front_prev -> next);
+    for(back_prev = first; back_prev -> next != back; back_prev = back_prev -> next);
+    if(front -> next == back){
+        front_prev -> next = back;
+        front -> next = back -> next;
+        back -> next = front;
+        
+    }
+    else{
+        front_prev -> next = back_prev -> next;
+        back -> next = front -> next;
+        back_prev -> next = front;
+        front ->next = p;
+        
+    }
+    p = front;
+    front = back;
+    back = p;
 }
 
 int main(){
     int i, n;
     //scanf("%d", &n);
-    n = 5;
+    n = 7;
     for(i = 1; i <= n; i++){
         printf("%3d",pesudo_random(i));
     }
     putchar('\n');
-    PStu pesudo_first, first, current, s, q, prev;
+    PStu pesudo_first, first, p1;
     first = create(n);
     TEST(pesudo_first);
     pesudo_first -> grade = 200;
+    pesudo_first -> num = 0;
     pesudo_first -> next = first;
-    current = first;
-    prev = pesudo_first;
-    /*
-    for(;current -> next != NULL; prev = current, current = current -> next){
-        PStu current2, prev2 = current;
-        for(current2 = current -> next; current2 -> next != NULL; prev2 = current2, current2 = current2 -> next){
-            if(current -> grade < current2 -> grade){
-                switch_node(prev, current2, prev2);
+    
+    i = 0;
+    for(p1 = first; p1 -> next != NULL; p1 = p1 -> next){
+        PStu p2;
+        PStu max = p1, q = p1;
+        i++;
+        for(p2 = p1 -> next; p2 != NULL; p2 = p2 -> next){
+            if(max -> grade < p2 -> grade){
+                max = p2;
             }
         }
-    }
-    */
-    for(current = first->next; current->next!=NULL; current = current->next){
-        s = current;
-        for(q = current->next;q!=NULL;q = q->next){
-            if(q->grade < s->grade){
-                s = q;
-            }
+        if(max != p1){
+            switch_node(p1, max, pesudo_first);
         }
-        if(s != current){
-            int temp;
-            temp = s->grade;
-            s->grade = current->grade;
-            current->grade = s->grade;
-            //其他元素也可类似交换
+        int j = 0;
+        p1 = pesudo_first;
+        for(j = 0; j < i; j++) p1 = p1 -> next;
+        for(q = pesudo_first -> next; q != NULL; q = q -> next){
+            //printf("%3.0lf", q -> grade);
         }
     }
     
-   //switch_node(first, first ->next->next, first->next);
-    for(current = first, prev = pesudo_first; current != NULL; prev = current, current = current -> next){
-        printf("%3lf\n", current -> grade);
+    
+    
+   //switch_node(first, first -> next -> next -> next, pesudo_first);
+    for(p1 = pesudo_first -> next; p1 != NULL; p1 = p1 -> next){
+        printf("%3lf\n", p1 -> grade);
     }
+
     return 0;
 }
