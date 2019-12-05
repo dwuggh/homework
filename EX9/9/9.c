@@ -64,10 +64,10 @@ int main(){
     int i, n;
     //scanf("%d", &n);
     n = 7;
-    for(i = 1; i <= n; i++){
-        printf("%3d",pesudo_random(i));
-    }
-    putchar('\n');
+    //for(i = 1; i <= n; i++){
+        //printf("%3d",pesudo_random(i));
+    //}
+    //putchar('\n');
     PStu pesudo_first, first, p1;
     first = create(n);
     TEST(pesudo_first);
