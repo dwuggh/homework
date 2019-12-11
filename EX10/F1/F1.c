@@ -22,6 +22,7 @@ Stu* create(){
     return head;
 }
 
+//here is the insert module.
 Stu* insert(Stu *p, int n){
     Stu *t = p;
     Stu *buff;
@@ -78,11 +79,11 @@ int main(){
             if((node2->avg > min->avg)&&node2->sorted == 0) {min=node2;}
         }
         min ->sorted = 1;
+        fprintf(fp, "%s\t%s\t%f\t%f\t%f\t%f\n", min->num, min->name, min->score1, min->score2, min->score3, min->avg);
         for(min=head; min != NULL; min = min -> next){
             if(min->sorted == 0) break;
         }
-        if(min==NULL) break;
-        fprintf(fp, "%s\t%s\t%f\t%f\t%f\t%f\n", min->num, min->name, min->score1, min->score2, min->score3, min->avg);
+        
     }
     fclose(fp);
     return 0;
